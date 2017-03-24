@@ -12,6 +12,39 @@ public class Attraction implements Parcelable {
 
     public Attraction(){};
 
+    //setters i getters
+    public void setName(String name) {
+        this.name = name;
+    }
+    public  void setAdress(String adress) {
+        this.adress = adress;
+    }
+    public void setShort_description(String short_description) {
+        this.short_description = short_description;
+    }
+    public void setLong_description(String long_description) {
+        this.long_description = long_description;
+    }
+    public void setLongitude(Long longitude) {
+        this.longitude = longitude;
+    }
+    public void setLatitude(Long latitude) {
+        this.latitude = latitude;
+    }
+
+    String getName() {
+        return this.name;
+    }
+    String getAdress() {
+        return this.adress;
+    }
+    String getShort_description() {
+        return this.short_description;
+    }
+    String getLong_description() {
+        return this.long_description;
+    }
+
     @Override
     public int describeContents() {
         return 0;
