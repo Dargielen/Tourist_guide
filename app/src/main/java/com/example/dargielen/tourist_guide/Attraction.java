@@ -1,3 +1,5 @@
+package com.example.dargielen.tourist_guide;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,6 +11,7 @@ public class Attraction implements Parcelable {
 
     private String name, adress, short_description, long_description;
     private Long longitude, latitude;
+    //private List<String> photo;
 
     public Attraction(){};
 
@@ -31,6 +34,9 @@ public class Attraction implements Parcelable {
     public void setLatitude(Long latitude) {
         this.latitude = latitude;
     }
+    /*public void setPhoto(String new_photo) {
+        this.photo.add(new_photo);
+    }*/
 
     String getName() {
         return this.name;
@@ -44,6 +50,9 @@ public class Attraction implements Parcelable {
     String getLong_description() {
         return this.long_description;
     }
+    /*List<String> getPhoto() {
+        return this.photo;
+    }*/
 
     @Override
     public int describeContents() {
@@ -58,6 +67,7 @@ public class Attraction implements Parcelable {
         pc.writeString(long_description);
         pc.writeLong(longitude);
         pc.writeLong(latitude);
+        //pc.writeArray(photo<String>);
     }
 
     public static final Parcelable.Creator<Attraction> CREATOR = new Parcelable.Creator<Attraction>() {
