@@ -9,7 +9,7 @@ import android.os.Parcelable;
 
 public class Attraction implements Parcelable {
 
-    private String name, adress, short_description, long_description;
+    private String name, adress, short_description, long_description, image;
     private Long longitude, latitude;
     //private List<String> photo;
 
@@ -34,6 +34,9 @@ public class Attraction implements Parcelable {
     public void setLatitude(Long latitude) {
         this.latitude = latitude;
     }
+    public void setImage(String image) {
+        this.image = image;
+    }
     /*public void setPhoto(String new_photo) {
         this.photo.add(new_photo);
     }*/
@@ -49,6 +52,9 @@ public class Attraction implements Parcelable {
     }
     String getLong_description() {
         return this.long_description;
+    }
+    String getImage() {
+        return this.image;
     }
     /*List<String> getPhoto() {
         return this.photo;
@@ -67,6 +73,7 @@ public class Attraction implements Parcelable {
         pc.writeString(long_description);
         pc.writeLong(longitude);
         pc.writeLong(latitude);
+        pc.writeString(image);
         //pc.writeArray(photo<String>);
     }
 
@@ -86,6 +93,7 @@ public class Attraction implements Parcelable {
         long_description = pc.readString();
         longitude = pc.readLong();
         latitude = pc.readLong();
+        image = pc.readString();
     }
 
 }
