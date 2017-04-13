@@ -17,7 +17,7 @@ import android.util.Log;
 public class DBAdapter {
 
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "TG.db";
+    public static final String DATABASE_NAME = "Attractions.db";
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + Attractions.TABLE_NAME + " (" +
                     Attractions._ID + " INTEGER PRIMARY KEY," +
@@ -27,17 +27,20 @@ public class DBAdapter {
                     Attractions.COLUMN_NAME_DESCRIPTION_LONG + " TEXT," +
                     Attractions.COLUMN_NAME_LONGITUDE + " TEXT," +
                     Attractions.COLUMN_NAME_LATITUDE + " TEXT," +
-                    Attractions.COLUMN_NAME_IMAGES + " TEXT)";
+                    Attractions.COLUMN_NAME_IMAGES + " TEXT )";
+
+
 
     public static class Attractions implements BaseColumns {
         public static final String TABLE_NAME = "attractions";
         public static final String COLUMN_NAME_NAME = "name";
-        public static final String COLUMN_NAME_ADDRESS = "addres";
-        public static final String COLUMN_NAME_DESCRIPTION_SHORT = "short description";
-        public static final String COLUMN_NAME_DESCRIPTION_LONG = "long description";
+        public static final String COLUMN_NAME_ADDRESS = "address";
+        public static final String COLUMN_NAME_DESCRIPTION_SHORT = "short_description";
+        public static final String COLUMN_NAME_DESCRIPTION_LONG = "long_description";
         public static final String COLUMN_NAME_LONGITUDE = "longitude";
         public static final String COLUMN_NAME_LATITUDE = "latitude";
         public static final String COLUMN_NAME_IMAGES = "images";
+        public static final String KEY = "key";
     }
 
     private static final String TAG = "DBAdapter";
@@ -85,7 +88,7 @@ public class DBAdapter {
     public long createAttraction(Attraction attraction) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(Attractions.COLUMN_NAME_NAME, attraction.getName());
-        initialValues.put(Attractions.COLUMN_NAME_ADDRESS, attraction.getAdress());
+        initialValues.put(Attractions.COLUMN_NAME_ADDRESS, attraction.getAddress());
         initialValues.put(Attractions.COLUMN_NAME_DESCRIPTION_SHORT, attraction.getShort_description());
         initialValues.put(Attractions.COLUMN_NAME_DESCRIPTION_LONG, attraction.getLong_description());
         initialValues.put(Attractions.COLUMN_NAME_IMAGES, attraction.getImage());
@@ -95,7 +98,7 @@ public class DBAdapter {
         return mDb.insert(Attractions.TABLE_NAME, null, initialValues);
     }
 
-    public boolean deleteAllAttractionss() {
+    public boolean deleteAllAttractions() {
         int doneDelete = 0;
         doneDelete = mDb.delete(Attractions.TABLE_NAME, null , null);
 
@@ -105,7 +108,7 @@ public class DBAdapter {
 
     public Cursor fetchAllAttractions() {
         Cursor mCursor = mDb.query(Attractions.TABLE_NAME, new String[]{Attractions._ID, Attractions.COLUMN_NAME_NAME,
-                Attractions.COLUMN_NAME_ADDRESS, Attractions.COLUMN_NAME_DESCRIPTION_SHORT,}, null, null, null, null, orderBy, null);
+                Attractions.COLUMN_NAME_ADDRESS, Attractions.COLUMN_NAME_DESCRIPTION_SHORT, Attractions.COLUMN_NAME_IMAGES}, null, null, null, null, orderBy, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }

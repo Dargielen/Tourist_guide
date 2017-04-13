@@ -52,7 +52,7 @@ public class Attraction implements Parcelable {
     String getName() {
         return this.name;
     }
-    String getAdress() {
+    String getAddress() {
         return this.address;
     }
     String getShort_description() {
