@@ -12,9 +12,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
             android:text="@string/attr_name_label"/>
         <TextView
             android:id="@+id/attr_name"
+            android:textAlignment="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -25,9 +28,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
         android:text="@string/attr_address_label"/>
     <TextView
         android:id="@+id/attr_address"
+        android:textAlignment="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     </LinearLayout>
@@ -38,9 +44,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
             android:text="@string/attr_dscr_label"/>
         <TextView
             android:id="@+id/attr_dscr_long"
+            android:textAlignment="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
