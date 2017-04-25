@@ -1,12 +1,14 @@
 package com.example.dargielen.tourist_guide;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -66,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
                     mainImage.setImageResource(resId);
                     return true;
                 } else if(view.getId() == R.id.filter) {
-                    TextView dystans = (TextView) view;
-                    double dyst = cursor.getDouble(columnIndex);
-                    String tekst = String.format("%.2f", dyst) + " km";
-                    dystans.setText(tekst);
+                    TextView distance = (TextView) view;
+                    double dist = cursor.getDouble(columnIndex);
+                    String text = String.format("%.2f", dist) + " km";
+                    distance.setText(text);
                     return true;
                 }
                 return false;
@@ -78,5 +80,26 @@ public class MainActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.attractionsList);
         listView.setAdapter(dataAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> listView, View view, int position, long id) {
+
+                Cursor cursor = (Cursor) listView.getItemAtPosition(position);
+
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_NAME));
+                String address = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_ADDRESS));
+                String longDescription = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_DESCRIPTION_LONG));
+                String image = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_IMAGES));
+                double longitude = cursor.getDouble(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_LONGITUDE));
+                double latitude = cursor.getDouble(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_LATITUDE));
+
+                Attraction dataToSend = new Attraction(name, address, null, longDescription, image, longitude, latitude);
+                Intent i = new Intent(getApplicationContext(), AttractionDetail.class);
+                i.putExtra(DBAdapter.Attractions.KEY, dataToSend);
+                startActivity(i);
+            }
+        });
     }
 }
