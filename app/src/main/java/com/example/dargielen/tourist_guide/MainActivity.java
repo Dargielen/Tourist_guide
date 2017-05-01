@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -103,5 +105,39 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_sort, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.order_name_asc:
+                dbAdapter.setOrderBy(DBAdapter.Attractions.COLUMN_NAME_NAME + " ASC");
+                displayListView();
+                return true;
+
+            case R.id.order_name_dsc:
+                dbAdapter.setOrderBy(DBAdapter.Attractions.COLUMN_NAME_NAME + " DESC");
+                displayListView();
+                return true;
+
+            /*case R.id.order_distance_asc:
+                dbAdapter.setOrderBy(DBAdapter.Attractions.COLUMN_NAME_DISTANCE + " ASC");
+                displayListView();
+                return true;
+
+            case R.id.order_distance_dsc:
+                dbAdapter.setOrderBy(DBAdapter.Attractions.COLUMN_NAME_DISTANCE + " DSC");
+                displayListView();
+                return true;*/
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

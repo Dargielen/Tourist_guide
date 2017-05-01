@@ -10,7 +10,7 @@ import android.os.Parcelable;
 public class Attraction implements Parcelable {
 
     private String name, address, short_description, long_description, image;
-    private Double longitude, latitude;
+    private double longitude, latitude;
     //private List<String> photo;
 
     public Attraction(String name, String address, String short_description, String long_description, String image, Double longitude, Double latitude){
@@ -36,10 +36,10 @@ public class Attraction implements Parcelable {
     public void setLong_description(String long_description) {
         this.long_description = long_description;
     }
-    public void setLongitude(Double longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-    public void setLatitude(Double latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
     public void setImage(String image) {
@@ -64,10 +64,10 @@ public class Attraction implements Parcelable {
     String getImage() {
         return this.image;
     }
-    Double getLongitude() {
+    double getLongitude() {
         return this.longitude;
     }
-    Double getLatitude() {
+    double getLatitude() {
         return this.latitude;
     }
     /*List<String> getPhoto() {

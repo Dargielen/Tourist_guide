@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.dargielen.tourist_guide.MainActivity">
+
+    <item
+        android:id="@+id/order_name_asc"
+        android:title="@string/order_name_asc"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/order_name_dsc"
+        android:title="@string/order_name_dsc"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/order_distance_asc"
+        android:title="@string/order_distance_asc"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/order_distance_dsc"
+        android:title="@string/order_distance_dsc"
+        app:showAsAction="never"/>
+
+
+</menu>
