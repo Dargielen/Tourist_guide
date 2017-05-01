@@ -115,6 +115,27 @@ public class DBAdapter {
         return mCursor;
     }
 
+    public Cursor fetchAllAttractionsByNameAndDescription(String inputText) throws SQLException {
+
+        Cursor mCursor = null;
+
+        if (inputText == null || inputText.length () == 0) {
+            mCursor = mDb.query(Attractions.TABLE_NAME, null, null, null, null, null, orderBy, null);
+
+        } else {
+            mCursor = mDb.query(Attractions.TABLE_NAME, null,
+                    Attractions.COLUMN_NAME_NAME + " like '%" + inputText + "%' OR " + Attractions.COLUMN_NAME_ADDRESS + " like '%" + inputText + "%'",
+                    null, null, null, orderBy, null);
+        }
+
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        return mCursor;
+
+    }
+
     public void insertSomeAttractions() {
         createAttraction(new Attraction("Jaskinia niedźwiedzia", "Śnieżnicki Park Krajobrazowy, Kletno 18, 57-550 Kletno", "Jaskinia Niedźwiedzia – najdłuższa jaskinia całych Sudetów, położona w Masywie Śnieżnika, w dolinie Kleśnicy, w pobliżu wsi Kletno. Odkryta podczas eksploatacji kamieniołomu marmuru w 1966 roku, w obrębie wzniesienia Stroma.", "Jaskinię odkryto 14 października 1966 roku podczas eksploatacji wyrobiska „Kletno III” przez Bystrzyckie Zakłady Kamienia Budowlanego wydobywającego w tej okolicy marmur metodą odkrywkową. Około godziny 13.00 wykonano odstrzał, po którym odsłonił się dwumetrowy otwór o soczewkowatym kształcie. Wiertacz strzałowy Roman Kińczyk z Lądka-Zdroju wraz z jednym z pracujących tu więźniów zajrzeli pierwsi do otworu jaskini i znaleźli w nim kości. Duża ilość szczątków nasunęła odkrywcom przypuszczenie o zbiorowym grobie. Powiadomiono natychmiast kierownictwo zakładu i geologa z pobliskiego uzdrowiska. Trzy dni później dokonano pierwszych fachowych oględzin. Łączną długość korytarzy i sal na dwóch poziomach oszacowano na ok. 200 m. Liczne kości stwierdzone w namuliskach okazały się być szczątkami prehistorycznych ssaków.","jaskinia1", 50.2344142, 16.84281050000004));
         createAttraction(new Attraction("Sanktuarium w Wambierzycach", "Pl. Najświętszej Marii Panny 11, 57-420 Wambierzyce", "Bazylika Nawiedzenia Najświętszej Marii Panny, Sanktuarium Wambierzyckiej Królowej Rodzin Patronki Ziemi Kłodzkiej – barokowa bazylika znajdująca się w Wambierzycach koło Radkowa w powiecie kłodzkim. Wybudowana została w latach 1715-1723.", "Obecna bazylika stoi na wzgórzu, gdzie w XII w. w niszy wysokiego drzewa umieszczono figurkę Matki Boskiej. Według kronik w 1218 r. ociemniały Jan z Raszewa odzyskał w tym miejscu wzrok. Po tym zdarzeniu do Wambierzyc zaczęło podróżować wielu pielgrzymów. Wkrótce pod drzewem z figurką postawiono ołtarz, a po bokach lichtarz i chrzcielnicę. W 1263 r. na wzgórzu powstał drewniany kościół.\n" +

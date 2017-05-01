@@ -6,13 +6,15 @@ import android.database.Cursor;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.FilterQueryProvider;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,14 +44,14 @@ public class MainActivity extends AppCompatActivity {
     private void displayListView() {
         Cursor cursor = dbAdapter.fetchAllAttractions();
 
-        String[] columns = new String[] {
+        String[] columns = new String[]{
                 DBAdapter.Attractions.COLUMN_NAME_NAME,
                 DBAdapter.Attractions.COLUMN_NAME_ADDRESS,
                 DBAdapter.Attractions.COLUMN_NAME_DESCRIPTION_SHORT,
                 DBAdapter.Attractions.COLUMN_NAME_IMAGES
         };
 
-        int[] to = new int[] {
+        int[] to = new int[]{
                 R.id.attr_name,
                 R.id.attr_address,
                 R.id.attr_dscr_short,
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     int resId = ctxt.getResources().getIdentifier(cursor.getString(columnIndex), "drawable", ctxt.getPackageName());
                     mainImage.setImageResource(resId);
                     return true;
-                } else if(view.getId() == R.id.filter) {
+                } else if (view.getId() == R.id.filter) {
                     TextView distance = (TextView) view;
                     double dist = cursor.getDouble(columnIndex);
                     String text = String.format("%.2f", dist) + " km";
@@ -105,10 +107,31 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        EditText mFilter = (EditText) findViewById(R.id.filter);
+        mFilter.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                dataAdapter.getFilter().filter(s.toString());
+            }
+        });
+
+        dataAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+            public Cursor runQuery(CharSequence constraint) {
+                return dbAdapter.fetchAllAttractionsByNameAndDescription(constraint.toString());
+            }
+        });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu (Menu menu){
         getMenuInflater().inflate(R.menu.menu_sort, menu);
         return true;
     }
