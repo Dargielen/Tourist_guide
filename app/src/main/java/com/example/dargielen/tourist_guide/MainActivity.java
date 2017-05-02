@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         dataAdapter.setFilterQueryProvider(new FilterQueryProvider() {
             public Cursor runQuery(CharSequence constraint) {
                 return dbAdapter.fetchAllAttractionsByNameAndDescription(constraint.toString());
+                /* TODO wyszukiwanie po opisie nie działa */
             }
         });
     }

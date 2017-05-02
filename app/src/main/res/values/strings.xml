@@ -5,6 +5,7 @@
     <string name="attr_address_label">Adres: </string>
     <string name="attr_dscr_label">Opis: </string>
     <string name="btn_map">Pokaż na mapie</string>
+    <string name="btn_route">Wyznacz trasę</string>
 
     <string name="order_name_asc">Sortuj po nazwie rosnąco</string>
     <string name="order_name_dsc">Sortuj po nazwie malejąco</string>
