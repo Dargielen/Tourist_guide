@@ -9,16 +9,19 @@ import android.os.Parcelable;
 
 public class Attraction implements Parcelable {
 
-    private String name, address, short_description, long_description, image;
+    private String name, address, short_description, long_description, image1, image2, image3, image4;
     private double longitude, latitude;
     //private List<String> photo;
 
-    public Attraction(String name, String address, String short_description, String long_description, String image, Double longitude, Double latitude){
+    public Attraction(String name, String address, String short_description, String long_description, String image1, String image2, String image3, String image4, Double longitude, Double latitude){
         this.name = name;
         this.address = address;
         this.short_description = short_description;
         this.long_description = long_description;
-        this.image = image;
+        this.image1 = image1;
+        this.image2 = image2;
+        this.image3 = image3;
+        this.image4 = image4;
         this.longitude = longitude;
         this.latitude = latitude;
     }
@@ -42,8 +45,17 @@ public class Attraction implements Parcelable {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage1(String image1) {
+        this.image1 = image1;
+    }
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+    public void setImage3(String image3) {
+        this.image3 = image3;
+    }
+    public void setImage4(String image4) {
+        this.image4 = image4;
     }
     /*public void setPhoto(String new_photo) {
         this.photo.add(new_photo);
@@ -61,8 +73,17 @@ public class Attraction implements Parcelable {
     String getLong_description() {
         return this.long_description;
     }
-    String getImage() {
-        return this.image;
+    String getImage1() {
+        return this.image1;
+    }
+    String getImage2() {
+        return this.image2;
+    }
+    String getImage3() {
+        return this.image3;
+    }
+    String getImage4() {
+        return this.image4;
     }
     double getLongitude() {
         return this.longitude;
@@ -87,7 +108,10 @@ public class Attraction implements Parcelable {
         pc.writeString(long_description);
         pc.writeDouble(longitude);
         pc.writeDouble(latitude);
-        pc.writeString(image);
+        pc.writeString(image1);
+        pc.writeString(image2);
+        pc.writeString(image3);
+        pc.writeString(image4);
         //pc.writeArray(photo<String>);
     }
 
@@ -107,7 +131,10 @@ public class Attraction implements Parcelable {
         long_description = pc.readString();
         longitude = pc.readDouble();
         latitude = pc.readDouble();
-        image = pc.readString();
+        image1 = pc.readString();
+        image2 = pc.readString();
+        image3 = pc.readString();
+        image4 = pc.readString();
     }
 
 }

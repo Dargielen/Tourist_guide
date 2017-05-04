@@ -3,9 +3,9 @@ package com.example.dargielen.tourist_guide;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 DBAdapter.Attractions.COLUMN_NAME_NAME,
                 DBAdapter.Attractions.COLUMN_NAME_ADDRESS,
                 DBAdapter.Attractions.COLUMN_NAME_DESCRIPTION_SHORT,
-                DBAdapter.Attractions.COLUMN_NAME_IMAGES
+                DBAdapter.Attractions.COLUMN_NAME_IMAGE1
         };
 
         int[] to = new int[]{
@@ -97,11 +97,14 @@ public class MainActivity extends AppCompatActivity {
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_NAME));
                 String address = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_ADDRESS));
                 String longDescription = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_DESCRIPTION_LONG));
-                String image = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_IMAGES));
+                String image1 = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_IMAGE1));
+                String image2 = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_IMAGE2));
+                String image3 = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_IMAGE3));
+                String image4 = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_IMAGE4));
                 double longitude = cursor.getDouble(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_LONGITUDE));
                 double latitude = cursor.getDouble(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_LATITUDE));
 
-                Attraction dataToSend = new Attraction(name, address, null, longDescription, image, longitude, latitude);
+                Attraction dataToSend = new Attraction(name, address, null, longDescription, image1, image2, image3, image4, longitude, latitude);
                 Intent i = new Intent(getApplicationContext(), AttractionDetail.class);
                 i.putExtra(DBAdapter.Attractions.KEY, dataToSend);
                 startActivity(i);
@@ -126,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         dataAdapter.setFilterQueryProvider(new FilterQueryProvider() {
             public Cursor runQuery(CharSequence constraint) {
                 return dbAdapter.fetchAllAttractionsByNameAndDescription(constraint.toString());
-                /* TODO wyszukiwanie po opisie nie działa */
             }
         });
     }

@@ -8,10 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.GridView;
 import android.widget.TextView;
-
-import java.util.Locale;
 
 /**
  * Created by dargielen on 20.04.2017.
@@ -21,6 +19,7 @@ public class AttractionDetail extends AppCompatActivity {
 
     Attraction attr;
     String longitude, latitude;
+    int[] images = new int[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +34,19 @@ public class AttractionDetail extends AppCompatActivity {
         attr_name.setText(attr.getName());
         attr_address.setText(attr.getAddress());
         attr_dscr.setText(attr.getLong_description());
-        int images = ctx.getResources().getIdentifier(attr.getImage(), "drawable", ctx.getPackageName());
+        int image1 = ctx.getResources().getIdentifier(attr.getImage1(), "drawable", ctx.getPackageName());
+        int image2 = ctx.getResources().getIdentifier(attr.getImage2(), "drawable", ctx.getPackageName());
+        int image3 = ctx.getResources().getIdentifier(attr.getImage3(), "drawable", ctx.getPackageName());
+        int image4 = ctx.getResources().getIdentifier(attr.getImage4(), "drawable", ctx.getPackageName());
+        images[0] = image1;
+        images[1] = image2;
+        images[2] = image3;
+        images[3] = image4;
         latitude = String.valueOf(attr.getLatitude());
         longitude = String.valueOf(attr.getLongitude());
 
-        ImageView attr_img = (ImageView) findViewById(R.id.imageView);
-        attr_img.setImageResource(images);
+        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setAdapter(new ImageAdapter(this, images));
 
         Button btn_map = (Button) findViewById(R.id.buttonMap);
         btn_map.setOnClickListener(new View.OnClickListener() {
