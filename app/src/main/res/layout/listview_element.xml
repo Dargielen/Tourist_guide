@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
-        app:srcCompat="@android:drawable/screen_background_dark" />
+    <LinearLayout
+        android:id="@+id/imageLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="10dp"
+            app:srcCompat="@android:drawable/screen_background_dark" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/imageLayout"
         android:orientation="vertical">
 
         <LinearLayout
@@ -23,18 +32,19 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:text="@string/attr_name_label"
                 android:textColor="@color/colorPrimary"
-                android:text="@string/attr_name_label"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/attr_name"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorText"/>
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorText" />
         </LinearLayout>
 
         <LinearLayout
@@ -45,14 +55,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:text="@string/attr_address_label"
                 android:textColor="@color/colorPrimary"
-                android:text="@string/attr_address_label"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/attr_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorText"/>
+                android:textColor="@color/colorText" />
         </LinearLayout>
 
         <LinearLayout
@@ -63,15 +74,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:text="@string/attr_dscr_label"
                 android:textColor="@color/colorPrimary"
-                android:text="@string/attr_dscr_label"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/attr_dscr_short"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorText"/>
+                android:textColor="@color/colorText" />
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
