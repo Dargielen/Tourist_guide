@@ -4,6 +4,7 @@
     <string name="attr_name_label">Nazwa: </string>
     <string name="attr_address_label">Adres: </string>
     <string name="attr_dscr_label">Opis: </string>
+    <string name="attr_dst_label">Odległość: </string>
     <string name="btn_map">Pokaż na mapie</string>
     <string name="btn_route">Wyznacz trasę</string>
 
@@ -11,5 +12,8 @@
     <string name="order_name_dsc">Sortuj po nazwie malejąco</string>
     <string name="order_distance_asc">Sortuj po odległości rosnąco</string>
     <string name="order_distance_dsc">Sortuj po odległości malejąco</string>
+
+    <string name="btn_no_connection">Spróbuj ponownie</string>
+    <string name="no_connection_text">Wymagane połączenie</string>
 
 </resources>

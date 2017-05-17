@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 /**
  * Created by dargielen on 04.05.2017.
  */
@@ -14,9 +16,9 @@ import android.widget.ImageView;
 public class ImageAdapter extends BaseAdapter{
 
     private Context mContext;
-    private int[] mImages;
+    private String [] mImages;
 
-    public ImageAdapter(Context c, int[] images) {
+    public ImageAdapter(Context c, String[] images) {
         mContext = c;
         mImages = images;
     }
@@ -36,8 +38,6 @@ public class ImageAdapter extends BaseAdapter{
     public View getView(final int position, View convertView, ViewGroup parent) {
         ImageView imageView;
 
-
-
         if (convertView == null) {
             imageView = new ImageView(mContext);
             imageView.setLayoutParams(new GridView.LayoutParams(400, 400));
@@ -48,7 +48,8 @@ public class ImageAdapter extends BaseAdapter{
         {
             imageView = (ImageView) convertView;
         }
-        imageView.setImageResource(mImages[position]);
+        Picasso.with(mContext).load(mImages[position]).placeholder(R.drawable.progress_animation).error(R.drawable.nophoto).into(imageView);
+        //imageView.setImageResource(mImages[position]);
         return imageView;
     }
 

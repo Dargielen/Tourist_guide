@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
@@ -19,7 +18,7 @@ public class AttractionDetail extends AppCompatActivity {
 
     Attraction attr;
     String longitude, latitude;
-    int[] images = new int[4];
+    String[] images = new String[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +33,16 @@ public class AttractionDetail extends AppCompatActivity {
         attr_name.setText(attr.getName());
         attr_address.setText(attr.getAddress());
         attr_dscr.setText(attr.getLong_description());
-        int image1 = ctx.getResources().getIdentifier(attr.getImage1(), "drawable", ctx.getPackageName());
+        /*int image1 = ctx.getResources().getIdentifier(attr.getImage1(), "drawable", ctx.getPackageName());
         int image2 = ctx.getResources().getIdentifier(attr.getImage2(), "drawable", ctx.getPackageName());
         int image3 = ctx.getResources().getIdentifier(attr.getImage3(), "drawable", ctx.getPackageName());
-        int image4 = ctx.getResources().getIdentifier(attr.getImage4(), "drawable", ctx.getPackageName());
+        int image4 = ctx.getResources().getIdentifier(attr.getImage4(), "drawable", ctx.getPackageName());*/
+
+        String image1 = attr.getImage1();
+        String image2 = attr.getImage2();
+        String image3 = attr.getImage3();
+        String image4 = attr.getImage4();
+
         images[0] = image1;
         images[1] = image2;
         images[2] = image3;
@@ -59,8 +64,7 @@ public class AttractionDetail extends AppCompatActivity {
 
     private void showOnMap() {
 
-        Log.d("AttractionDetail", "geo:" + latitude + "," + longitude);
-        Uri gmmIntentUri = Uri.parse("geo:" + latitude + "," + longitude);
+        Uri gmmIntentUri = Uri.parse("http://maps.google.co.in/maps?q=" + attr.getName());
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
