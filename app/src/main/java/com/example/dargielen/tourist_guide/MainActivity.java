@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -56,16 +57,18 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private EditText mFilter;
     Context ctxt;
-    LocationManager locationManager;
     Location yourLocation = new Location("");
-    public static final double DEFAULT_LATITUDE = 50.11929513769021;
-    public static final double DEFAULT_LONGITUDE = 16.645192354917526;
+    /*public static final double DEFAULT_LATITUDE = 50.11929513769021;
+    public static final double DEFAULT_LONGITUDE = 16.645192354917526;*/
+    public static final double DEFAULT_LONGITUDE = 50.11929513769021;
+    public static final double DEFAULT_LATITUDE = 16.645192354917526;
+    public static final String LONGITUDE = "longitude";
+    public static final String LATITUDE = "latitude";
     private static final int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
-    private static final long INTERVAL_TIME = 20;
-    private static final float MINIMAL_DISTANCE = 100;
+    private static final long INTERVAL_TIME = 10;
+    private static final float MINIMAL_DISTANCE = 20;
     //private static final String DATA_URL = "https://drive.google.com/uc?id=0B1or6bxN_MUrb0Y5YU1hR0lZeFU&export=download";
     private static final String DATA_URL = "https://drive.google.com/uc?id=0B1or6bxN_MUrVkFPQkotbWV0U28&export=download";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,19 +81,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             setNoInternetView();
         }
-
-
-        /*setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ctxt = getApplicationContext();
-
-        dbAdapter = new DBAdapter(ctxt);
-        dbAdapter.open();
-        dbAdapter.deleteAllAttractions();
-        dbAdapter.insertSomeAttractions();
-
-        displayListView();*/
     }
 
     @Override
@@ -128,6 +118,17 @@ public class MainActivity extends AppCompatActivity {
         dbAdapter.open();
         dbAdapter.deleteAllAttractions();
         useOkHttp();
+
+        FloatingActionButton map = (FloatingActionButton) findViewById(R.id.show_map);
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity, ShowMap.class);
+                intent.putExtra(LONGITUDE, yourLocation.getLongitude());
+                intent.putExtra(LATITUDE, yourLocation.getLatitude());
+                startActivity(intent);
+            }
+        });
     }
 
     private void setNoInternetView() {
@@ -326,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
                     location.setLatitude(latitude);
                     location.setLongitude(longitude);
                     result = (double) yourLocation.distanceTo(location)/1000;
+                    Log.d(TAG, "odleglosc: " + result);
                     dbAdapter.insertDistance(id, result);
                 }
             } finally {
