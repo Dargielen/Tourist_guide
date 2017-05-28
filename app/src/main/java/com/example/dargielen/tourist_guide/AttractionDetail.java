@@ -33,10 +33,6 @@ public class AttractionDetail extends AppCompatActivity {
         attr_name.setText(attr.getName());
         attr_address.setText(attr.getAddress());
         attr_dscr.setText(attr.getLong_description());
-        /*int image1 = ctx.getResources().getIdentifier(attr.getImage1(), "drawable", ctx.getPackageName());
-        int image2 = ctx.getResources().getIdentifier(attr.getImage2(), "drawable", ctx.getPackageName());
-        int image3 = ctx.getResources().getIdentifier(attr.getImage3(), "drawable", ctx.getPackageName());
-        int image4 = ctx.getResources().getIdentifier(attr.getImage4(), "drawable", ctx.getPackageName());*/
 
         String image1 = attr.getImage1();
         String image2 = attr.getImage2();
@@ -69,5 +65,4 @@ public class AttractionDetail extends AppCompatActivity {
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
     }
-
 }

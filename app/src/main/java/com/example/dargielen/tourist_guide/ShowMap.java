@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,14 +34,14 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_map);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         DBAdapter attr_database = new DBAdapter(getApplicationContext());
         attr_database.open();
-        Cursor cursor = attr_database.fetchAllAttractions();
+        Cursor cursor = attr_database.fetchAllAttractionsForMap();
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
         Intent intent = getIntent();
@@ -68,6 +69,16 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         googleMap.animateCamera(cameraUpdate);
         googleMap.moveCamera(cameraUpdate);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

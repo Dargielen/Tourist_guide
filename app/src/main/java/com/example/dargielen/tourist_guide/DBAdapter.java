@@ -105,6 +105,7 @@ public class DBAdapter {
         initialValues.put(Attractions.COLUMN_NAME_IMAGE4, attraction.getImage4());
         initialValues.put(Attractions.COLUMN_NAME_LONGITUDE, attraction.getLongitude());
         initialValues.put(Attractions.COLUMN_NAME_LATITUDE, attraction.getLatitude());
+        initialValues.put(Attractions.COLUMN_NAME_DISTANCE, attraction.getDistance());
 
         return mDb.insert(Attractions.TABLE_NAME, null, initialValues);
     }
@@ -117,12 +118,26 @@ public class DBAdapter {
         return doneDelete > 0;
     }
 
+    public void setOrderBy(String txt) {
+        orderBy = txt;
+    }
+
     public Cursor fetchAllAttractions() {
         Cursor mCursor = mDb.query(Attractions.TABLE_NAME, null, null, null, null, null, orderBy, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
 
+        return mCursor;
+    }
+
+    public Cursor fetchAllAttractionsForDistance() {
+        Cursor mCursor = mDb.query(Attractions.TABLE_NAME, new String[] {Attractions._ID, Attractions.COLUMN_NAME_LONGITUDE, Attractions.COLUMN_NAME_LATITUDE}, null, null, null, null, orderBy, null);
+        return mCursor;
+    }
+
+    public Cursor fetchAllAttractionsForMap() {
+        Cursor mCursor = mDb.query(Attractions.TABLE_NAME, new String[] {Attractions.COLUMN_NAME_NAME, Attractions.COLUMN_NAME_LONGITUDE, Attractions.COLUMN_NAME_LATITUDE}, null, null, null, null, orderBy, null);
         return mCursor;
     }
 
@@ -165,11 +180,5 @@ public class DBAdapter {
         mDb.update(Attractions.TABLE_NAME, updateDistance, Attractions._ID + "=" + id, null);
 
     }
-
-    public void setOrderBy(String txt) {
-        orderBy = txt;
-    }
-
-
 
 }

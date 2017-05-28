@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -58,17 +59,17 @@ public class MainActivity extends AppCompatActivity {
     private EditText mFilter;
     Context ctxt;
     Location yourLocation = new Location("");
-    /*public static final double DEFAULT_LATITUDE = 50.11929513769021;
-    public static final double DEFAULT_LONGITUDE = 16.645192354917526;*/
     public static final double DEFAULT_LONGITUDE = 50.11929513769021;
     public static final double DEFAULT_LATITUDE = 16.645192354917526;
+    //public static final double DEFAULT_LONGITUDE = 16.645192354917526;
+    //public static final double DEFAULT_LATITUDE = 50.11929513769021;
     public static final String LONGITUDE = "longitude";
     public static final String LATITUDE = "latitude";
     private static final int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
-    private static final long INTERVAL_TIME = 10;
-    private static final float MINIMAL_DISTANCE = 20;
-    //private static final String DATA_URL = "https://drive.google.com/uc?id=0B1or6bxN_MUrb0Y5YU1hR0lZeFU&export=download";
-    private static final String DATA_URL = "https://drive.google.com/uc?id=0B1or6bxN_MUrVkFPQkotbWV0U28&export=download";
+    private static final long INTERVAL_TIME = 20;
+    private static final float MINIMAL_DISTANCE = 100;
+    private static final String DATA_URL = "https://drive.google.com/uc?id=0B1or6bxN_MUrTTBxMzhJcjJocHc&export=downloa";
+    //private static final String DATA_URL = "https://drive.google.com/uc?id=0B1or6bxN_MUrVEVsdGxpWHBlWnM&export=download";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,15 +215,15 @@ public class MainActivity extends AppCompatActivity {
                 Cursor cursor = (Cursor) listView.getItemAtPosition(position);
 
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_NAME));
-                String address = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_ADDRESS));
-                String longDescription = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_DESCRIPTION_LONG));
-                String image1 = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_IMAGE1));
-                String image2 = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_IMAGE2));
-                String image3 = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_IMAGE3));
-                String image4 = cursor.getString(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_IMAGE4));
-                double longitude = cursor.getDouble(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_LONGITUDE));
-                double latitude = cursor.getDouble(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_LATITUDE));
-                double distance = cursor.getDouble(cursor.getColumnIndex(DBAdapter.Attractions.COLUMN_NAME_DISTANCE));
+                String address = cursor.getString(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_ADDRESS));
+                String longDescription = cursor.getString(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_DESCRIPTION_LONG));
+                String image1 = cursor.getString(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_IMAGE1));
+                String image2 = cursor.getString(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_IMAGE2));
+                String image3 = cursor.getString(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_IMAGE3));
+                String image4 = cursor.getString(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_IMAGE4));
+                double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_LONGITUDE));
+                double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_LATITUDE));
+                double distance = cursor.getDouble(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_DISTANCE));
 
                 Attraction dataToSend = new Attraction(name, address, null, longDescription, image1, image2, image3, image4, longitude, latitude, distance);
                 Intent i = new Intent(getApplicationContext(), AttractionDetail.class);
@@ -258,6 +259,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_ACCESS_FINE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startLocationListener();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Nie przyznano uprawnień. Domyślna lokalizacja to Kamieńczyk w Kotlinie Kłodzkiej", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
+    }
+
     private void getLocation() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(ctxt, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -273,6 +289,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startLocationListener() {
+        //Toast.makeText(getApplicationContext(), "startLocationListener", Toast.LENGTH_SHORT).show();
         if (ContextCompat.checkSelfPermission(ctxt, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ctxt, Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -280,28 +297,37 @@ public class MainActivity extends AppCompatActivity {
 
             Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (lastKnownLocation != null) {
-                yourLocation.setLatitude(lastKnownLocation.getLatitude());
-                yourLocation.setLongitude(lastKnownLocation.getLongitude());
+                Log.d(TAG, "lastKnownLocation:  " + lastKnownLocation.getLatitude() + " " + lastKnownLocation.getLongitude());
+                //yourLocation.setLatitude(lastKnownLocation.getLatitude());
+                //yourLocation.setLongitude(lastKnownLocation.getLongitude());
+                yourLocation.setLatitude(lastKnownLocation.getLongitude());
+                yourLocation.setLongitude(lastKnownLocation.getLatitude());
             }
+
+            Log.d(TAG, "getLocation: ");
 
             LocationListener locationListener = new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    yourLocation.setLatitude(location.getLatitude());
-                    yourLocation.setLongitude(location.getLongitude());
+                    Log.d(TAG, "onLocationChanged:  ");
+                    //yourLocation.setLatitude(location.getLatitude());
+                    //yourLocation.setLongitude(location.getLongitude());
+                    yourLocation.setLatitude(location.getLongitude());
+                    yourLocation.setLongitude(location.getLatitude());
                     calculateDistance();
                     Cursor cursor = dbAdapter.fetchAllAttractions();
                     dataAdapter.changeCursor(cursor);
+                    Toast.makeText(getApplicationContext(), "uaktualniono lokalizację", Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onStatusChanged(String provider, int status, Bundle extras) {
-
+                    Log.d(TAG, "onStatusChanged: ");
                 }
 
                 @Override
                 public void onProviderEnabled(String provider) {
-
+                    Log.d(TAG, "onProviderEnabled: ");
                 }
 
                 @Override
@@ -316,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void calculateDistance() {
         double result;
-        Cursor cursor = dbAdapter.fetchAllAttractions();
+        Cursor cursor = dbAdapter.fetchAllAttractionsForDistance();
         if (cursor != null) {
             try {
                 while (cursor.moveToNext()) {
@@ -361,7 +387,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.order_distance_dsc:
-                dbAdapter.setOrderBy(DBAdapter.Attractions.COLUMN_NAME_DISTANCE + " DSC");
+                dbAdapter.setOrderBy(DBAdapter.Attractions.COLUMN_NAME_DISTANCE + " DESC");
                 displayListView();
                 return true;
 
