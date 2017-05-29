@@ -59,9 +59,7 @@ public class ImageAdapter extends BaseAdapter{
 
                 @Override
                 public void onClick(View arg0) {
-                    int id = (int) arg0.getTag(); // problem
-
-                    zoomImageFromThumb(arg0, id);
+                    zoomImageFromThumb(arg0, position);
                 }
             });
         }
@@ -70,49 +68,28 @@ public class ImageAdapter extends BaseAdapter{
             imageView = (ImageView) convertView;
         }
         Picasso.with(mContext).load(mImages[position]).placeholder(R.drawable.progress_animation).error(R.drawable.nophoto).into(imageView);
-        //imageView.setImageResource(mImages[position]);
         return imageView;
     }
 
-    private void zoomImageFromThumb(final View thumbView, int imageResId) {
-        // If there's an animation in progress, cancel it immediately and
-        // proceed with this one.
+    private void zoomImageFromThumb(final View thumbView, int position) {
         if (mCurrentAnimator != null) {
             mCurrentAnimator.cancel();
         }
 
-        // Load the high-resolution "zoomed-in" image.
         final ImageView expandedImageView = (ImageView) ((Activity) mContext)
                 .findViewById(R.id.expanded_image);
-        expandedImageView.setImageResource(imageResId);
+        Picasso.with(mContext).load(mImages[position]).placeholder(R.drawable.progress_animation).error(R.drawable.nophoto).into(expandedImageView);
 
-
-        // Calculate the starting and ending bounds for the zoomed-in image.
-        // This step
-        // involves lots of math. Yay, math.
         final Rect startBounds = new Rect();
         final Rect finalBounds = new Rect();
         final Point globalOffset = new Point();
 
-        // The start bounds are the global visible rectangle of the thumbnail,
-        // and the
-        // final bounds are the global visible rectangle of the container view.
-        // Also
-        // set the container view's offset as the origin for the bounds, since
-        // that's
-        // the origin for the positioning animation properties (X, Y).
         thumbView.getGlobalVisibleRect(startBounds);
         ((Activity) mContext).findViewById(R.id.container)
                 .getGlobalVisibleRect(finalBounds, globalOffset);
         startBounds.offset(-globalOffset.x, -globalOffset.y);
         finalBounds.offset(-globalOffset.x, -globalOffset.y);
 
-        // Adjust the start bounds to be the same aspect ratio as the final
-        // bounds using the
-        // "center crop" technique. This prevents undesirable stretching during
-        // the animation.
-        // Also calculate the start scaling factor (the end scaling factor is
-        // always 1.0).
         float startScale;
         if ((float) finalBounds.width() / finalBounds.height() > (float) startBounds
                 .width() / startBounds.height()) {
@@ -123,7 +100,6 @@ public class ImageAdapter extends BaseAdapter{
             startBounds.left -= deltaWidth;
             startBounds.right += deltaWidth;
         } else {
-            // Extend start bounds vertically
             startScale = (float) startBounds.width() / finalBounds.width();
             float startHeight = startScale * finalBounds.height();
             float deltaHeight = (startHeight - startBounds.height()) / 2;
@@ -131,21 +107,12 @@ public class ImageAdapter extends BaseAdapter{
             startBounds.bottom += deltaHeight;
         }
 
-        // Hide the thumbnail and show the zoomed-in view. When the animation
-        // begins,
-        // it will position the zoomed-in view in the place of the thumbnail.
         thumbView.setAlpha(0f);
         expandedImageView.setVisibility(View.VISIBLE);
 
-        // Set the pivot point for SCALE_X and SCALE_Y transformations to the
-        // top-left corner of
-        // the zoomed-in view (the default is the center of the view).
         expandedImageView.setPivotX(0f);
         expandedImageView.setPivotY(0f);
 
-        // Construct and run the parallel animation of the four translation and
-        // scale properties
-        // (X, Y, SCALE_X, and SCALE_Y).
         AnimatorSet set = new AnimatorSet();
         set.play(
                 ObjectAnimator.ofFloat(expandedImageView, View.X,
@@ -172,9 +139,6 @@ public class ImageAdapter extends BaseAdapter{
         set.start();
         mCurrentAnimator = set;
 
-        // Upon clicking the zoomed-in image, it should zoom back down to the
-        // original bounds
-        // and show the thumbnail instead of the expanded image.
         final float startScaleFinal = startScale;
         expandedImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,9 +147,6 @@ public class ImageAdapter extends BaseAdapter{
                     mCurrentAnimator.cancel();
                 }
 
-                // Animate the four positioning/sizing properties in parallel,
-                // back to their
-                // original values.
                 AnimatorSet set = new AnimatorSet();
                 set.play(
                         ObjectAnimator.ofFloat(expandedImageView, View.X,
