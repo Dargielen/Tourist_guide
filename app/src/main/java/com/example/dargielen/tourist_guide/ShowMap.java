@@ -22,7 +22,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Created by dargielen on 20.05.2017.
  */
 
-public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class ShowMap extends AppCompatActivity implements OnMapReadyCallback {
+
+    private Marker mMarker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         googleMap.animateCamera(cameraUpdate);
         googleMap.moveCamera(cameraUpdate);
+
     }
 
     @Override
@@ -81,13 +84,7 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback, Go
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        if (marker.getTitle().equals("Znajdujesz się tutaj"))
-        {
-            Intent intent = new Intent(ShowMap.this, AttractionDetail.class);
-            startActivity(intent);
-        }
-        return false;
-    }
+
+
+
 }

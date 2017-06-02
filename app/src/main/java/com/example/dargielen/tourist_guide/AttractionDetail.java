@@ -17,7 +17,7 @@ import android.widget.TextView;
 public class AttractionDetail extends AppCompatActivity {
 
     Attraction attr;
-    String longitude, latitude;
+    String longitude, latitude, web;
     String[] images = new String[4];
 
     @Override
@@ -45,6 +45,7 @@ public class AttractionDetail extends AppCompatActivity {
         images[3] = image4;
         latitude = String.valueOf(attr.getLatitude());
         longitude = String.valueOf(attr.getLongitude());
+        web = attr.getWeb();
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this, images));
@@ -53,6 +54,13 @@ public class AttractionDetail extends AppCompatActivity {
         btn_map.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 showOnMap();
+            }
+        });
+
+        Button btn_web = (Button) findViewById(R.id.buttonWeb);
+        btn_web.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showWeb();
             }
         });
 
@@ -65,4 +73,11 @@ public class AttractionDetail extends AppCompatActivity {
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
     }
+
+    private void showWeb() {
+
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(web));
+        startActivity(browserIntent);
+    }
+
 }

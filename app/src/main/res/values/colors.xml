@@ -4,9 +4,13 @@
     <color name="colorPrimaryDark3">#303F9F</color>
     <color name="colorAccent3">#FF4081</color>
 
-    <color name="colorPrimary">#246c36</color>
-    <color name="colorPrimaryDark">#0e3103</color>
+    <color name="colorPrimary2">#246c36</color>
+    <color name="colorPrimaryDark2">#0e3103</color>
+
+    <color name="colorPrimary">#cd3333</color>
+    <color name="colorPrimaryDark">#a52a2a</color>
     <color name="colorAccent">#f0e600</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorText">#6B8184</color>
+
 </resources>

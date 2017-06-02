@@ -27,7 +27,7 @@ public class ImageAdapter extends BaseAdapter{
     private String [] mImages;
     private Animator mCurrentAnimator;
 
-    private int mShortAnimationDuration;
+    private int mShortAnimationDuration = 500;
 
     public ImageAdapter(Context c, String[] images) {
         mContext = c;
@@ -93,7 +93,6 @@ public class ImageAdapter extends BaseAdapter{
         float startScale;
         if ((float) finalBounds.width() / finalBounds.height() > (float) startBounds
                 .width() / startBounds.height()) {
-            // Extend start bounds horizontally
             startScale = (float) startBounds.height() / finalBounds.height();
             float startWidth = startScale * finalBounds.width();
             float deltaWidth = (startWidth - startBounds.width()) / 2;

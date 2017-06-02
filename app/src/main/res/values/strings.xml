@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Tourist guide</string>
+    <string name="app_name">Atrakcje Kotliny Kłodzkiej</string>
     <string name="hint">Znajdź...</string>
     <string name="attr_name_label">Nazwa: </string>
     <string name="attr_address_label">Adres: </string>
     <string name="attr_dscr_label">Opis: </string>
     <string name="attr_dst_label">Odległość: </string>
     <string name="btn_map">Pokaż na mapie</string>
-    <string name="btn_route">Wyznacz trasę</string>
+    <string name="btn_web">Pokaż stronę Web</string>
 
     <string name="order_name_asc">Sortuj po nazwie rosnąco</string>
     <string name="order_name_dsc">Sortuj po nazwie malejąco</string>

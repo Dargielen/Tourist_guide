@@ -59,16 +59,16 @@ public class MainActivity extends AppCompatActivity {
     private EditText mFilter;
     Context ctxt;
     Location yourLocation = new Location("");
-    public static final double DEFAULT_LONGITUDE = 50.11929513769021;
-    public static final double DEFAULT_LATITUDE = 16.645192354917526;
-    //public static final double DEFAULT_LONGITUDE = 16.645192354917526;
-    //public static final double DEFAULT_LATITUDE = 50.11929513769021;
+    //public static final double DEFAULT_LONGITUDE = 50.11929513769021;
+    //public static final double DEFAULT_LATITUDE = 16.645192354917526;
+    public static final double DEFAULT_LONGITUDE = 16.645192354917526;
+    public static final double DEFAULT_LATITUDE = 50.11929513769021;
     public static final String LONGITUDE = "longitude";
     public static final String LATITUDE = "latitude";
     private static final int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
     private static final long INTERVAL_TIME = 20;
     private static final float MINIMAL_DISTANCE = 100;
-    private static final String DATA_URL = "https://drive.google.com/uc?id=0B1or6bxN_MUrTTBxMzhJcjJocHc&export=downloa";
+    private static final String DATA_URL = "https://drive.google.com/uc?id=0B1or6bxN_MUrdVdSTkZpRVF3N1E&export=download";
     //private static final String DATA_URL = "https://drive.google.com/uc?id=0B1or6bxN_MUrVEVsdGxpWHBlWnM&export=download";
 
     @Override
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     private void displayListView() {
         Cursor cursor = dbAdapter.fetchAllAttractions();
 
-        String[] columns = new String[]{
+        final String[] columns = new String[]{
                 DBAdapter.Attractions.COLUMN_NAME_NAME,
                 DBAdapter.Attractions.COLUMN_NAME_ADDRESS,
                 DBAdapter.Attractions.COLUMN_NAME_DESCRIPTION_SHORT,
@@ -224,8 +224,9 @@ public class MainActivity extends AppCompatActivity {
                 double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_LONGITUDE));
                 double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_LATITUDE));
                 double distance = cursor.getDouble(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_DISTANCE));
+                String web = cursor.getString(cursor.getColumnIndexOrThrow(DBAdapter.Attractions.COLUMN_NAME_WEB));
 
-                Attraction dataToSend = new Attraction(name, address, null, longDescription, image1, image2, image3, image4, longitude, latitude, distance);
+                Attraction dataToSend = new Attraction(name, address, null, longDescription, image1, image2, image3, image4, longitude, latitude, distance, web);
                 Intent i = new Intent(getApplicationContext(), AttractionDetail.class);
                 i.putExtra(DBAdapter.Attractions.KEY, dataToSend);
                 startActivity(i);
@@ -300,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "lastKnownLocation:  " + lastKnownLocation.getLatitude() + " " + lastKnownLocation.getLongitude());
                 //yourLocation.setLatitude(lastKnownLocation.getLatitude());
                 //yourLocation.setLongitude(lastKnownLocation.getLongitude());
+                /* z nieznanych przyczyn współrzędne podawane są odwrotnie */
                 yourLocation.setLatitude(lastKnownLocation.getLongitude());
                 yourLocation.setLongitude(lastKnownLocation.getLatitude());
             }
