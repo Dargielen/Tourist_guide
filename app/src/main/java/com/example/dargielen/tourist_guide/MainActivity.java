@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                     ImageView mainImage = (ImageView) view;
                     mainImage.setBackgroundColor(Color.BLACK);
                     Picasso.with(ctxt).load(cursor.getString(columnIndex)).
-                            placeholder(R.drawable.progress_animation).error(R.drawable.nophoto).into(mainImage);
+                            placeholder(R.drawable.progress).error(R.drawable.nophoto).into(mainImage);
                     //int resId = ctxt.getResources().getIdentifier(cursor.getString(columnIndex), "drawable", ctxt.getPackageName());
                     //mainImage.setImageResource(resId);
                     return true;

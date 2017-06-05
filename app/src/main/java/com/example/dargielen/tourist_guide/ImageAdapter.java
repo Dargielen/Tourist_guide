@@ -67,7 +67,7 @@ public class ImageAdapter extends BaseAdapter{
         {
             imageView = (ImageView) convertView;
         }
-        Picasso.with(mContext).load(mImages[position]).placeholder(R.drawable.progress_animation).error(R.drawable.nophoto).into(imageView);
+        Picasso.with(mContext).load(mImages[position]).placeholder(R.drawable.progress).error(R.drawable.nophoto).into(imageView);
         return imageView;
     }
 
@@ -78,7 +78,7 @@ public class ImageAdapter extends BaseAdapter{
 
         final ImageView expandedImageView = (ImageView) ((Activity) mContext)
                 .findViewById(R.id.expanded_image);
-        Picasso.with(mContext).load(mImages[position]).placeholder(R.drawable.progress_animation).error(R.drawable.nophoto).into(expandedImageView);
+        Picasso.with(mContext).load(mImages[position]).placeholder(R.drawable.progress).error(R.drawable.nophoto).into(expandedImageView);
 
         final Rect startBounds = new Rect();
         final Rect finalBounds = new Rect();
