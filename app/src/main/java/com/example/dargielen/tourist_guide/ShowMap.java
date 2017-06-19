@@ -13,6 +13,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -50,7 +51,8 @@ public class ShowMap extends AppCompatActivity implements OnMapReadyCallback {
         double longitude = intent.getDoubleExtra(MainActivity.LONGITUDE, MainActivity.DEFAULT_LONGITUDE);
         double latitude = intent.getDoubleExtra(MainActivity.LATITUDE, MainActivity.DEFAULT_LATITUDE);
         LatLng mLatLng = new LatLng(longitude, latitude);
-        googleMap.addMarker(new MarkerOptions().position(mLatLng).title("Znajdujesz się tutaj"));
+        googleMap.addMarker(new MarkerOptions().position(mLatLng).title("Znajdujesz się tutaj")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         builder.include(mLatLng);
         if (cursor != null) {
             try {
